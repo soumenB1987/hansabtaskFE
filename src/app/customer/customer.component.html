@@ -1,0 +1,84 @@
+<p> Hansab Task </p>
+
+<div>
+  <h1> {{ errMsg }} </h1>
+</div>
+
+<select #cusid (change)="fetchCustomerData(cusid.value)">
+  <option disabled selected>Select Customer</option>
+  <option *ngFor="let getCustomer of customers" value="{{ getCustomer.id }}"> {{ getCustomer.name }} </option>
+</select>
+
+<button (click)="getCustomerAllCarData()">Show Selected Customer Car</button> &nbsp;
+
+<div *ngIf="customer">
+  <h3>
+    <label>
+      Customer ID : {{ customer.id }}
+    </label>
+    <label>
+      Customer Name : {{ customer.name }}
+    </label>
+  </h3>
+</div>
+
+
+<div *ngIf="showCustomerAllCars">
+  <h3> Selected Customer's Car </h3>
+  <table>
+    <th> Car Make </th>
+    <th> Car Model </th>
+    <tr *ngFor="let carData of customerCars">
+      <td> {{ carData.make }} </td>
+      <td> {{ carData.model }} </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="showAllCars">
+  <h3> Showing All Cars </h3>
+  <table>
+    <th> Car Make </th>
+    <th> Car Model </th>
+    <tr *ngFor="let carData of allCars" (click)="getCarDetails(carData.id)">
+      <td> {{ carData.make }} </td>
+      <td> {{ carData.model }} </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="showingCarDetails">
+  <h3> Showing Selected Car Make Details </h3>
+  <table>
+    <th> ID </th>
+    <th> Car Make </th>
+    <th> Car Model </th>
+    <th> Car Number Plate </th>
+    <tr>
+      <td> {{ carDetails.id }} </td>
+      <td> {{ carDetails.make }} </td>
+      <td> {{ carDetails.model }} </td>
+      <td> {{ carDetails.numberplate }} </td>
+    </tr>
+  </table>
+</div>
+
+<button (click)="getCustomerAllCars()">Show All Car</button>
+<select #sort (change)="selectedShortType(sort.value)">
+  <option value="asc" selected> ASC  </option>
+  <option value="desc"> DESC  </option>
+</select>
+
+<input type="text" #field (keyup)="searchedCustomer(field.value)">
+<button (click)="getCustomerDataBySearchCreteria()" > Search ... </button>
+
+<div *ngIf="showSearchCustomer">
+  <h3> Searched Customers </h3>
+  <div *ngFor="let searchedResult of searchedCustomerResult">
+    <h4> {{ searchedResult.name }} </h4>
+    <h5> Customer's Car </h5>
+    <div *ngFor="let cars of searchedResult.cars">
+      <h5> {{ cars.model }} </h5>
+    </div>
+  </div>
+</div>
